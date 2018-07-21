@@ -106,7 +106,7 @@ export class HomepageComponent implements OnInit ,AfterViewInit{
                         this.httpClient.post('https://104.155.137.69:9000/api/v1/salesman/setOccupied', '', httpOptions)
                           .subscribe((data: any) => {
                              console.log(data);
-                             window.open('https://35.184.34.22:3000/'+id,"_top");
+                             window.open('https://35.188.1.197:3000/'+id,"_top");
                           });
                       }
 
