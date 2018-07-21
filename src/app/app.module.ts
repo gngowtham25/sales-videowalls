@@ -10,7 +10,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { RouterModule , Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { LetterBoldPipe } from './shared/letter-bold.pipe';
 import { SearchFilterPipe } from './shared/filter-pipe';
@@ -22,30 +22,32 @@ import { SignupComponent } from './signup/signup.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { RegisterpageComponent } from './registerpage/registerpage.component';
 import { AddpageComponent } from './addpage/addpage.component';
+import { UiSwitchModule } from 'ngx-toggle-switch';
 
 
-const appRoutes:Routes = [
+
+const appRoutes: Routes = [
   {
-    path:'',
-    component : HomeComponent
+    path: '',
+    component: HomeComponent
   },
   {
-    path : 'homepage',
-    component : HomepageComponent
+    path: 'homepage',
+    component: HomepageComponent
   },
   {
-    path : 'signup',
-    component : SignupComponent
+    path: 'signup',
+    component: SignupComponent
   },
   {
-    path : 'register',
-    component : RegisterpageComponent
+    path: 'register',
+    component: RegisterpageComponent
   },
   {
-    path : 'addpage',
-    component : AddpageComponent
+    path: 'addpage',
+    component: AddpageComponent
   }
-]
+];
 
 
 @NgModule({
@@ -71,12 +73,13 @@ const appRoutes:Routes = [
     MatRippleModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    UiSwitchModule
   ],
-  providers: [{ provide: 'LOCALSTORAGE', useFactory: getLocalStorage },  ApiService],
+  providers: [{ provide: 'LOCALSTORAGE', useFactory: getLocalStorage }, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 export function getLocalStorage() {
-    return (typeof window !== "undefined") ? window.localStorage : null;
+  return (typeof window !== 'undefined') ? window.localStorage : null;
 }
