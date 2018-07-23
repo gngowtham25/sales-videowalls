@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient ,HttpHeaders} from '@angular/common/http';
-import { API_ENDPOINT } from '../../config/config';
+import { SERVER_URL } from '../../config/config';
 import { ElementRef } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 
@@ -35,7 +35,7 @@ export class AddpageComponent implements OnInit,AfterViewInit {
       })
     };
     console.log(data);
-    this.httpClient.post('http://104.155.137.69:9000/api/v1/product/createProduct',{"productName":value1,
+    this.httpClient.post(SERVER_URL+'/api/v1/product/createProduct',{"productName":value1,
      "productCategory": value2,"productDetails":value5 ,"productMRP":value3,"productSellingPrice":value4},httpOptions)
      .subscribe((data:any) => {
        console.log(data);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API_ENDPOINT } from '../../config/config';
+import { SERVER_URL } from '../../config/config';
 
 let name: String = "";
 let states = [];
@@ -53,7 +53,7 @@ export class RegisterpageComponent implements OnInit {
 				'authToken': authToken1
 			})
 		};
-		httpClient.post('http://104.155.137.69:9000/api/v1/productSalesman/getProductIdSalesmanIdMappingList', { "salesmanId": id }, httpOptions)
+		httpClient.post(SERVER_URL+'/api/v1/productSalesman/getProductIdSalesmanIdMappingList', { "salesmanId": id }, httpOptions)
 			.subscribe((data: any) => {
 				rpdt = data.data;
 			}
@@ -114,7 +114,7 @@ export class RegisterpageComponent implements OnInit {
 						})
 					};
 					if (this.values.length >= 4) {
-						this.httpClient.get('http://104.155.137.69:9000/api/v1/product/searchProduct?query='+this.values,httpOptions)
+						this.httpClient.get(SERVER_URL+'/api/v1/product/searchProduct?query='+this.values,httpOptions)
 						 	.subscribe((data: any) => {
 			          console.log(data);
 						 		this.states = [];
@@ -168,7 +168,7 @@ export class RegisterpageComponent implements OnInit {
 				'authToken': authToken1
 			})
 		};
-		this.httpClient.post('http://104.155.137.69:9000/api/v1/productSalesman/createProductSalesman', {
+		this.httpClient.post(SERVER_URL+'/api/v1/productSalesman/createProductSalesman', {
 			"productId": this.pdt.id,
 			"salesmanId": id
 		}, httpOptions)
@@ -201,7 +201,7 @@ export class RegisterpageComponent implements OnInit {
 				'authToken': authToken1
 			})
 		};
-		this.httpClient.post('http://104.155.137.69:9000/api/v1/productSalesman/removeSalesmanProduct', {
+		this.httpClient.post(SERVER_URL+'/api/v1/productSalesman/removeSalesmanProduct', {
 			"productId": pdtId,
 			"salesmanId": id
 		}, httpOptions)

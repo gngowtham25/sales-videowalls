@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API_ENDPOINT } from '../../config/config';
+import { SERVER_URL } from '../../config/config';
 import { AfterViewInit } from '@angular/core';
 import { ElementRef } from '@angular/core';
 
@@ -30,7 +30,7 @@ export class HomeComponent implements AfterViewInit{
               'authToken': this.authToken1
             })
           };
-          httpClient.post('http://104.155.137.69:9000/api/v1/salesman/checkAuthToken', '', httpOptions)
+          httpClient.post(SERVER_URL+'/api/v1/salesman/checkAuthToken', '', httpOptions)
             .subscribe((data: any) => {
               if (data.response === '108202') {
                 this.router.navigate(['homepage']);
@@ -49,7 +49,7 @@ export class HomeComponent implements AfterViewInit{
       this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#00002E';
   }
   onSubmit(user, pass) {
-    this.httpClient.post('http://104.155.137.69:9000/api/v1/salesman/checkSalesmanUser', {
+    this.httpClient.post(SERVER_URL+'/api/v1/salesman/checkSalesmanUser', {
       'userName': user,
       'password': pass
     })

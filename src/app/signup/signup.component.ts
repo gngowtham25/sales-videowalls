@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 // import { Inject } from '@angular/core';
-import { API_ENDPOINT } from '../../config/config';
+import { SERVER_URL } from '../../config/config';
 import { AfterViewInit } from '@angular/core';
 import { ElementRef } from '@angular/core';
 
@@ -29,7 +29,7 @@ export class SignupComponent implements AfterViewInit{
       this.validationErrs.push('Password cannot be empty');
     }
     if (pass === confirmPass) {
-      this.httpClient.post('http://104.155.137.69:9000/api/v1/salesman/createSalesman', {
+      this.httpClient.post(SERVER_URL+'/api/v1/salesman/createSalesman', {
         'userName': user,
         'password': pass
       })
