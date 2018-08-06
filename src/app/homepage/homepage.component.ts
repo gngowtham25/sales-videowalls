@@ -106,8 +106,9 @@ export class HomepageComponent implements OnInit ,AfterViewInit{
                         this.httpClient.post(SERVER_URL+'/api/v1/salesman/setOccupied', '', httpOptions)
                           .subscribe((data: any) => {
                              console.log(data);
-                             setTimeout(window.open(NODE_URL+id,"_top"),5000)
-                             
+                              setTimeout(() => {
+                                window.open(NODE_URL+id,"_top")
+                              }, 5000);
                           });
                       }
 
