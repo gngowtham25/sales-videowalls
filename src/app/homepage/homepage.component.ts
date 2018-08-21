@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import swal from 'sweetalert';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NODE_URL, SERVER_URL } from '../../config/config';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { timer } from 'rxjs/observable/timer';
 import { ElementRef } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
@@ -17,51 +17,51 @@ import { Inject } from '@angular/core';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent implements OnInit ,AfterViewInit{
+export class HomepageComponent implements OnInit, AfterViewInit {
   data: any;
   authToken1: any;
   idOfSalesman: any;
-  subscription :any;
+  subscription: any;
   isNotActive = false;
   isSetActive = false;
   state = false;
-  checkboxValue:boolean ;
-  checked:boolean;
+  checkboxValue: boolean;
+  checked: boolean;
 
 
-  constructor(private router: Router, private httpClient: HttpClient,private elementRef: ElementRef) {
+  constructor(private router: Router, private httpClient: HttpClient, private elementRef: ElementRef) {
     this.data = localStorage.getItem('staff');
-    if(this.data!=null){
-      if(JSON.parse(this.data).data!=null){
-      this.authToken1 = JSON.parse(JSON.parse(this.data).data).authToken;
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'authToken': this.authToken1
-        })
-      };
-      this.httpClient.post(SERVER_URL+'/api/v1/salesman/unSetOccupied', '', httpOptions)
-        .subscribe((data: any) => {
-           console.log(data);
-        });
-        this.httpClient.post(SERVER_URL+'/api/v1/salesman/checkIfActive', '', httpOptions)
+    if (this.data != null) {
+      if (JSON.parse(this.data).data != null) {
+        this.authToken1 = JSON.parse(JSON.parse(this.data).data).authToken;
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'authToken': this.authToken1
+          })
+        };
+        this.httpClient.post(SERVER_URL + '/api/v1/salesman/unSetOccupied', '', httpOptions)
           .subscribe((data: any) => {
-              if(data.response == 108206){
-                this.checked = false;
-                this.makeItInActive();
-              }
-              if(data.response == 108205){
-                this.checked=true;
-                this.onOn();
-                this.makeItActive();
-              }
+            console.log(data);
           });
-        }
+        this.httpClient.post(SERVER_URL + '/api/v1/salesman/checkIfActive', '', httpOptions)
+          .subscribe((data: any) => {
+            if (data.response == 108206) {
+              this.checked = false;
+              this.makeItInActive();
+            }
+            if (data.response == 108205) {
+              this.checked = true;
+              this.onOn();
+              this.makeItActive();
+            }
+          });
+      }
     }
-   }
-   ngAfterViewInit(): void {
-     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#00002E';
-   }
+  }
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#00002E';
+  }
   ngOnInit() {
   }
   onClick() {
@@ -81,7 +81,7 @@ export class HomepageComponent implements OnInit ,AfterViewInit{
         'authToken': this.authToken1
       })
     };
-    this.httpClient.post(SERVER_URL+'/api/v1/salesman/setActive', '', httpOptions)
+    this.httpClient.post(SERVER_URL + '/api/v1/salesman/setActive', '', httpOptions)
       .subscribe((data: any) => {
         // console.log(data);
         if (data.response === '108200') {
@@ -89,34 +89,32 @@ export class HomepageComponent implements OnInit ,AfterViewInit{
         }
       });
     this.subscription = Observable.interval(5000)
-								.subscribe(() => {
-                  this.httpClient.post(SERVER_URL+'/api/v1/room/getRoom', {'id':this.idOfSalesman}, httpOptions)
-                    .subscribe((data: any) => {
-                      let id = JSON.parse(data.data).id;
-                      if(id != undefined){
-                        this.unsubscribeMe();
-                        this.data = localStorage.getItem('staff');
-                        this.authToken1 = JSON.parse(JSON.parse(this.data).data).authToken;
-                        const httpOptions = {
-                          headers: new HttpHeaders({
-                            'Content-Type': 'application/json',
-                            'authToken': this.authToken1
-                          })
-                        };
-                        this.httpClient.post(SERVER_URL+'/api/v1/salesman/setOccupied', '', httpOptions)
-                          .subscribe((data: any) => {
-                             console.log(data);
-                              setTimeout(() => {
-                                window.open(NODE_URL+id,"_top")
-                              }, 5000);
-                          });
-                      }
+      .subscribe(() => {
+        this.httpClient.post(SERVER_URL + '/api/v1/room/getRoom', { 'id': this.idOfSalesman }, httpOptions)
+          .subscribe((data: any) => {
+            let id = JSON.parse(data.data).id;
+            if (id != undefined) {
+              this.unsubscribeMe();
+              this.data = localStorage.getItem('staff');
+              this.authToken1 = JSON.parse(JSON.parse(this.data).data).authToken;
+              const httpOptions = {
+                headers: new HttpHeaders({
+                  'Content-Type': 'application/json',
+                  'authToken': this.authToken1
+                })
+              };
+              this.httpClient.post(SERVER_URL + '/api/v1/salesman/setOccupied', '', httpOptions)
+                .subscribe((data: any) => {
+                  console.log(data);
+                  window.open(NODE_URL + id, "_top")
+                });
+            }
 
-                      console.log(data);
-                    });
-								});
-        }
-  unsubscribeMe(){
+            console.log(data);
+          });
+      });
+  }
+  unsubscribeMe() {
     this.subscription.unsubscribe();
   }
 
@@ -130,7 +128,7 @@ export class HomepageComponent implements OnInit ,AfterViewInit{
         'authToken': this.authToken1
       })
     };
-    this.httpClient.post(SERVER_URL+'/api/v1/salesman/unSetActive', '', httpOptions)
+    this.httpClient.post(SERVER_URL + '/api/v1/salesman/unSetActive', '', httpOptions)
       .subscribe((data: any) => {
         if (data.response === '108200') {
           // swal('INACTIVE');
@@ -145,31 +143,31 @@ export class HomepageComponent implements OnInit ,AfterViewInit{
   //       this.onOff();
   //     }
   // }
-  getUrl(){
+  getUrl() {
     return "url('VW-12.png')";
   }
-    // let checkBox = document.getElementById("slide-five");
-    //   function checkIt() {
-    //     console.log(checkBox.checked);
-    //   }
-    //   makeItActive();
-       makeItActive(){
-        this.checkboxValue = true;
-      }
-       makeItInActive(){
-        this.checkboxValue = false;
-      }
-    //   checkIt();
-    clicked(){
-      if(this.checkboxValue){
-        this.checked = true;
-        this.onOn();
-      }
-      else{
-        this.checked = false;
-        this.onOff();
-      }
+  // let checkBox = document.getElementById("slide-five");
+  //   function checkIt() {
+  //     console.log(checkBox.checked);
+  //   }
+  //   makeItActive();
+  makeItActive() {
+    this.checkboxValue = true;
+  }
+  makeItInActive() {
+    this.checkboxValue = false;
+  }
+  //   checkIt();
+  clicked() {
+    if (this.checkboxValue) {
+      this.checked = true;
+      this.onOn();
     }
+    else {
+      this.checked = false;
+      this.onOff();
+    }
+  }
 
 
 }
